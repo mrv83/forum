@@ -10,6 +10,7 @@ from django.forms.models import model_to_dict
 from forum.settings import MEDIA_ROOT
 from django.contrib.auth.decorators import login_required
 from chat.models import ChatChannels, ActiveUsers, ChatBannedUser, ChatMessages, ChatModerators
+import datetime
 
 def chat(request):
     channel = 1
@@ -72,6 +73,6 @@ def add_message(request):
         newmessage.user = user
         newmessage.chatchannel = ChatChannels.objects.get(pk=cn)
         newmessage.textmessage = st
-        newmessage.themecreateddata = dt
+#        newmessage.themecreateddata = datetime
         newmessage.save()
         return HttpResponse('1')
