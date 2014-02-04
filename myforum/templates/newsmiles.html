@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+
+	});
+</script>
+</head>
+
+<body>
+</br>
+	{% for smile in smiles_list %}
+ 		<a href="{% url 'smileitem_edit' smile.id %}"> Link to redact object    ID:{{ smile.id }} VIEW:{{ smile.smileview }} </a></br>
+ 	{% endfor %}
+	<p>sometext</p>
+
+	<a href="{% url 'addsmiles' %}"> Add new smiles </a>
+</body>
+
+</html>

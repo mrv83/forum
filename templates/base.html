@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+<!---    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/bootstrap.js"></script>  -->
+    {% load staticfiles %}
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}js/user.js"></script>
+
+</head>
+<body>
+    <div class="row">
+        <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="row" id="logo_reg_content">
+                <div class="col-md-1 col-lg-1">
+
+                </div>
+                <div class="col-md-2 col-lg-2" id="logo_content">
+                    <img src="{{ STATIC_URL }}avi/rus_logo.GIF"/>
+                </div>
+                <div class="col-md-5 col-lg-5" id="player_content">
+
+                </div>
+                <div class="col-md-3 col-lg-3 text-right" id="registration_content">
+                    {% if user.is_authenticated %}
+                        {% include "registration/logout.html" %}
+                    {% else %}
+                        {% include "registration/login.html" %}
+                    {% endif %}
+                </div>
+                <div class="col-md-1 col-lg-1">
+
+                </div>
+
+            </div>
+
+            <div class="row" id="toolbar_content">
+                <div class="col-md-1 col-lg-1"></div>
+                <div class="col-md-5 col-lg-5">
+                    <ul class="nav navbar-nav">
+                        <li class="menu_item active"><a href="{% url 'list_themes' %}">Forums</a></li>
+                        <li class="menu_item"><a href="{% url 'chat' %}">Chat</a></li>
+                        <li class="menu_item"><a href="#">Letters</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opponents<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">vik</a></li>
+                                <li><a href="#">mrv</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Live with music<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Radio Rocks</a></li>
+                                <li><a href="#">Radio Europe</a></li>
+                                <li class = "divider"></li>
+                                <li><a href="#">My playlist</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-1"></div>
+                <div class="col-md-4 col-lg-4">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <form class="navbar-form form-inline" role="search">
+                                <div class="form-group">
+                                    <label>
+                                        <input type="text" class="form-control" placeholder="Search" size="11">
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="s_option">
+                                        <input type="text" id="select_search" class="form-control" value="in theme" size="8" id="s_option" readonly>
+                                    </label>
+                                </div>
+                                <div class="dropdown form-group">
+
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" class="search_option" id="select_in_theme" value="in theme">in theme</a></li>
+                                        <li><a href="#" class="search_option" id="select_on_forum" value="on forum">on forum</a></li>
+                                        <li><a href="#" class="search_option" id="select_google" value="Google">Google</a></li>
+                                    </ul>
+                                </div>
+                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            </form>
+                        </li>
+                        <li>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">ENG<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">ENG</a></li>
+                                <li><a href="#">RUS</a></li>
+                                <li><a href="#">UKR</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                        </li>
+                        </ul>
+                </div>
+                <div class="col-md-1 col-lg-1"></div>
+            </div>
+        </nav>
+    </div>
+
+    </br>
+    <div class="row">
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-md-8 col-lg-8">
+            {% block toppaginator %}
+            {% endblock %}
+        </div>
+        <div class="col-md-2 col-lg-2">
+            {% block links %}
+            {% endblock %}
+        </div>
+        <div class="col-lg-1 col-md-1"></div>
+    </div>
+    <div class="row" id="site_content">
+        <div class="col-md-1 col-lg-1">
+
+        </div>
+        <div class="col-md-10 col-lg-10 center-block container" id="registration_content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="col-md-1 col-lg-1">
+
+        </div>
+    </div>
+    <div class="row">
+        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        </nav>
+    </div>
+
+</body>
+
+</html>

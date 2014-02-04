@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+
+	});
+</script>
+</head>
+
+<body>
+	<form action="{% url 'addsmiles' %}" method='post'>{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" value="Save" class="clearfix"/>
+		<input type="hidden" name="next" value="{% url 'newsetupsmiles' %}" />
+	</form>
+
+</body>
+
+</html>

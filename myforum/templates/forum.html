@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block toppaginator %}
+<div class="pagination">
+    <span class="step-links">
+    <ul class="pagination">
+        {% if pthemes.has_previous %}
+            <li><a href="?page={{ pthemes.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li><a href="?page={{ pthemes.number }}" class="btn disabled" role="button">&laquo;</a></li>
+        {% endif %}
+
+        {% for p in p_list %}
+            {% if p == '...' %}
+                <li><a href="?page=1" class="btn disabled" role="button">...</a></li>
+            {% else %}
+                <li><a href="?page={{ p }}">{{ p }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+
+        {% if pthemes.has_next %}
+            <li><a href="?page={{ pthemes.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li><a href="?page={{ pthemes.number }}" class="btn disabled" role="button">&raquo;</a></li>
+        {% endif %}
+    </ul>
+    </span>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<input type="text" class="form-control" placeholder="{{ptheme.nametheme}}" size="255" disabled>
+<textarea class="form-control" name="newmess" rows="3" disabled>{{ptheme.themetext}}</textarea>
+
+</br>
+<table class="table table-striped">
+
+{% for pmessage in pmessages %}
+    <tr>
+        <td>{{ pmessage.messtext}}</td>
+    </tr>
+{% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+    <ul class="pagination">
+        {% if pthemes.has_previous %}
+            <li><a href="?page={{ pthemes.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li><a href="?page={{ pthemes.number }}" class="btn disabled" role="button">&laquo;</a></li>
+        {% endif %}
+
+        {% for p in p_list %}
+            {% if p == '...' %}
+                <li><a href="?page=1" class="btn disabled" role="button">...</a></li>
+            {% else %}
+                <li><a href="?page={{ p }}">{{ p }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+
+        {% if pthemes.has_next %}
+            <li><a href="?page={{ pthemes.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li><a href="?page={{ pthemes.number }}" class="btn disabled" role="button">&raquo;</a></li>
+        {% endif %}
+    </ul>
+    </span>
+</div>
+
+{% if user.is_authenticated %}
+    <form role="form" method="POST" action="">{% csrf_token %}
+        <div class="form-group">
+            <textarea class="form-control" name="newmess" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default">Add message</button>
+        <input type="hidden" name="next" value="{# url #}" />
+    </form>
+{% endif %}
+
+{% endblock %}

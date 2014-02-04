@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<table><tr><td>
+<form method="post" action="" role="form">{% csrf_token %}
+  <div class="form-group">
+    <label for="login_input">Login:</label>
+    <input type="text" class="form-control" id="login_input" placeholder="{{u.username}}" size="64" disabled>
+  </div>
+  <div class="form-group">
+    <label for="email_input">Email address:</label>
+    <input type="email" class="form-control" id="email_input" name="email_input" placeholder="{{u.email}}" size="25" maxlength="75">
+  </div>
+  <div class="form-group">
+    <label for="fname_input">First name:</label>
+    <input type="text" class="form-control" id="fname_input" name="fname_input" placeholder="{{u.first_name}}" size="25">
+  </div>
+  <div class="form-group">
+    <label for="lname_input">Last name:</label>
+    <input type="text" class="form-control" id="lname_input" name="lname_input" placeholder="{{u.last_name}}" size="25">
+  </div>
+  <div class="form-group">
+    <table>
+        <tr>
+            <td><label>Birthday:</label></td>
+            <td>
+                <select class="form-control" name="year_input">
+                    {% for y in y_list %}
+                        <option id="year_{{ y }}" value="{{ y }}">{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select class="form-control" name="month_input">
+                    {% for i, m in m_list %}
+                        <option id="month_{{ m }}" value="{{ i }}">{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select class="form-control" name="day_input">
+                    {% for d in d_list %}
+                        <option id="day_{{ d }}" value="{{ d }}">{{ d }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+    </table>
+  </div>
+  <div class="form-group">
+    <label for="tel_input">Mobile number:</label>
+    <input type="text" class="form-control" id="tel_input" name="tel_input" placeholder="{{p.mobilenum}}" size="25" maxlength="11">
+    <p class="help-block">For example: +380xxxxxxxxx</p>
+  </div>
+  <div class="form-group">
+    <label for="from_input">Your city:</label>
+    <input type="text" class="form-control" id="from_input" name="from_input" placeholder="{{p.fromuser}}" size="25" maxlength="64">
+  </div>
+  <div class="form-group">
+    <label for="slogan_input">Slogan:</label>
+    <textarea class="form-control" name="slogan_input" rows="2" id="slogan_input">{{p.slogan}}</textarea>
+  </div>
+  <div class="form-group">
+    <label for="avatar_input">Avatar:</label>
+    <input type="file" id="avatar_input" name="avatar_input">
+  </div>
+<input type="submit" value="Save" class="clearfix" />
+<input type="hidden" name="next" value="{# url #}" />
+</form>
+
+</td>
+<td>
+<form method="post" action="" role="form">{% csrf_token %}
+  <div class="form-group">
+    <label for="other_input">other_input:</label>
+    <input type="text" class="form-control" id="other_input" placeholder="other_input" size="64" disabled>
+
+  </div>
+</form>
+</td>
+</tr>
+</table>
+{% endblock %}

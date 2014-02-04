@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% csrf_token %}
+{% block links%}
+<a href="{% url 'new_theme'%}" class="text-right">Create new theme</a>
+{% endblock %}
+
+{% block toppaginator %}
+<div class="pagination">
+    <span class="step-links">
+    <ul class="pagination">
+        {% if pthemes.has_previous %}
+            <li><a href="?page={{ pthemes.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li><a href="?page={{ pthemes.number }}" class="btn disabled" role="button">&laquo;</a></li>
+        {% endif %}
+
+        {% for p in p_list %}
+            {% if p == '...' %}
+                <li><a href="?page=1" class="btn disabled" role="button">...</a></li>
+            {% else %}
+                <li><a href="?page={{ p }}">{{ p }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+
+        {% if pthemes.has_next %}
+            <li><a href="?page={{ pthemes.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li><a href="?page={{ pthemes.number }}" class="btn disabled" role="button">&raquo;</a></li>
+        {% endif %}
+    </ul>
+    </span>
+</div>
+{% endblock %}
+
+{% block content %}
+<table class="table table-striped">
+{% for ptheme in pthemes %}
+    {# Each "ptheme" is a ptheme model object. #}
+    <tr>
+    <td><a href="/myforum/theme/{{ ptheme.id}}/"> {{ ptheme.nametheme }} </a></td>
+    <td>{{ ptheme.authuser }}</td>
+    <td>{{ ptheme.themecreateddata }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+    <ul class="pagination">
+        {% if pthemes.has_previous %}
+            <li><a href="?page={{ pthemes.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li><a href="?page={{ pthemes.number }}" class="btn disabled" role="button">&laquo;</a></li>
+        {% endif %}
+
+        {% for p in p_list %}
+            {% if p == '...' %}
+                <li><a href="?page=1" class="btn disabled" role="button">...</a></li>
+            {% else %}
+                <li><a href="?page={{ p }}">{{ p }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+
+        {% if pthemes.has_next %}
+            <li><a href="?page={{ pthemes.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li><a href="?page={{ pthemes.number }}" class="btn disabled" role="button">&raquo;</a></li>
+        {% endif %}
+    </ul>
+    </span>
+</div>
+
+{% endblock %}

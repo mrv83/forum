@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+
+    function setNAMEfileWITHid() {
+        var f_list = document.getElementsByClassName('itemfile');
+        for (var i=0; i < f_list.length; i++) {
+            var f = f_list[i];
+            f.name = "filesmile" +i;
+        };
+
+    };
+
+    function createTDwithINPUT(inp_type) {
+		var td = document.createElement("td");
+		switch (inp_type) {
+			case "file":
+                var input_form = document.createElement("input");
+				input_form.setAttribute("class", "itemid");
+                input_form.name = "idsmile";
+				input_form.type = "hidden";
+                input_form.value = 0;
+
+                td.appendChild(input_form);
+
+				var input_form = document.createElement("input");
+				input_form.setAttribute("class", "itemfile");
+                input_form.name = "filesmile"+parseInt($("#id_form_count").val());
+				input_form.type = "file";
+				input_form.accept = "image/*";
+				break;
+			case "text":
+				var input_form = document.createElement("input");
+				input_form.setAttribute("class", "itemtext");
+                input_form.name = "viewsmile";
+			    input_form.setAttribute("maxlenght", 10);
+				input_form.type = "text";
+				break;
+			case "src":
+				var input_form = document.createElement("img");
+				input_form.setAttribute("class", "itemimage");
+				input_form.setAttribute("src", "");
+				break;
+			case "button":
+				var input_form = document.createElement("input");
+				input_form.setAttribute("class", "delete");
+				input_form.type = "button";
+				input_form.value = "Delete";
+				break;
+			default:
+				alert("Wrong case!");
+		};
+		td.appendChild(input_form);
+		return(td);
+	}
+
+	function deleteForm(btn) {
+		$(btn).parents('.item').remove();
+		$("#id_form_count").val( parseInt($("#id_form_count").val())-1);
+		if (parseInt($("#id_form_count").val()) == 0 ) {
+			ADDnewROW();
+		};
+        setNAMEfileWITHid()
+	}
+
+	function ADDnewROW() {
+		var row = document.createElement("tr");
+		row.setAttribute("class", "item");
+
+        var td = createTDwithINPUT("file");
+		row.appendChild(td);
+		var td = createTDwithINPUT("text");
+		row.appendChild(td);
+		var td = createTDwithINPUT("src");
+		row.appendChild(td);
+		var td = createTDwithINPUT("button");
+		row.appendChild(td);
+
+		var tsmile = document.getElementById("tablesmile");
+		tsmile.appendChild(row);
+
+		$(".delete").unbind();
+		$(".delete").bind("click", function() {
+			deleteForm(this);
+		});
+
+        $(".itemtext").unbind();
+        $(".itemtext").bind("keypress", function() {
+            validateVIEW(this);
+        });
+
+		$("#id_form_count").val( parseInt($("#id_form_count").val())+1);
+	}
+
+    function validateVIEW(viewitem) {
+            //            alert("Work");
+
+        var list_viewtext = document.getElementsByClassName("itemtext");
+        var view_validate = 0;
+        for (var viewtext in list_viewtext) {
+            if (viewtext == this.val())
+            {
+                view_validate=2;
+            }
+            var n = this.val().search(viewtext);
+            if ((this.val().search(viewtext) != -1)&&(view_validate != 2))
+            {
+                view_validate=1;
+            }
+        }
+        switch (view_validate) {
+            case 0:
+                //this.parents('.item').children(4).children().val("");
+                break;
+            case 1:
+                //this.parents('.item').children(4).children().val("Warning: this view find in another view");
+                alert("Warning: this view find in another view");
+                break;
+            case 2:
+                //this.parents('.item').children(4).children().val("Alert!!! This view must be unique!!!");
+                alert("Alert!!! This view must be unique!!!");
+                break;
+            default: alert("Wrong case");
+        }
+    }
+
+
+	$(document).ready(function () {
+//alert("point0");
+
+		$(".delete").click(function () {
+        			deleteForm(this);
+    		});	
+
+		$("#add").click(function () {
+			ADDnewROW();
+		});
+
+        $(".itemtext").keypress(function() {
+            validateVIEW(this);
+        })
+
+        setNAMEfileWITHid()
+
+	});
+</script>
+</head>
+
+<body>
+
+<form id="smileform" enctype="multipart/form-data" action="" method="POST">{% csrf_token %}
+
+	<table id="tablesmile" border=1>
+		<thead>
+			<tr>
+				<td>Select image</td><td>View of smile</td><td>Image</td><td>Del record </td>
+			</tr>
+		</thead>
+		<tbody id="tablesmile">		
+			<input type="hidden" id="id_form_count" name="form_count" value="{{ forms|length }}" />
+			{% for form in forms %}	
+				<tr class="item">
+					<td> <input name="idsmile" type="hidden" value="{{ form.id }}"><input class="itemfile" name="filesmile" type="file" value="{{ form.smileicon }}"   accept="image/*" /> </td>
+					<td> <input class="itemtext" name="viewsmile" maxlength=10 type="text" value="{{ form.smileview }}" /> </td>
+					<td> <img  class="itemimage" src="{{MEDIA_URL}}{{ form.smileicon }}" /></td>
+					<td> <input class="delete" type="button" value="Delete" /> </td>
+					<td>comment</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<input id= "add" type="button" value="Add smile" /> <input type="submit" value="Save"  class="clearfix"/>
+	<input type="hidden" name="next" value="{# url #}" />
+</form>
+
+
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<html>
+<head>
+    <script type="text/javascript">
+        var today = "{{ today }}";
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+<!---    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/bootstrap.js"></script>  -->
+    {% load staticfiles %}
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}js/user.js"></script>
+</head>
+<body>
+{% csrf_token %}
+    Date is: <div id="date">{{ today }}</div>
+    <a href="#" id="yesterday">Get Yesterday</a>
+</body>

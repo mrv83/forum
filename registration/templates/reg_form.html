@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+{% csrf_token %}
+
+<h2>Registration</h2>
+<form method="post" action="">{% csrf_token %}
+<dl class="UserRegisterForm">
+{% for field in uform %}
+    <dt>{{ field.label_tag }}</dt>
+    <dd class="clearfix">{{ field }}
+    {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+    {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+    </dd>
+{% endfor %}
+</dl>
+<dl class="PersonRegisterForm">
+{% for field in pform %}
+    <dt>{{ field.label_tag }}</dt>
+    <dd class="clearfix">{{ field }}
+    {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+    {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+    </dd>
+{% endfor %}
+</dl>
+<input type="submit" value="Registration" class="clearfix" />
+<input type="hidden" name="next" value="{# url #}" />
+</form>
+{% endblock %}

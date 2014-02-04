@@ -1,0 +1,24 @@
+{% block logged %}
+      {% if form.errors %}
+    <p class="error">Input login and password</p>
+
+  {% endif %}
+
+  <form action="{% url 'login' %}?next={{ request.get_full_path }}" method='post'>{% csrf_token %}
+<div id="username_block">
+    <label for="username" class="text-danger text-right">Login:</label>
+    <input type="text" class="text-right" name="username" value="" id="username">
+</div>
+
+<div id="password_block">
+    <label for="password" class="text-danger text-right">Password:</label>
+    <input type="password" class="text-right" name="password" value="" id="password">
+</div>
+<div id="submit_block">
+        <a href="{% url 'registr_user' %}">Registration      </a><a href="#">Reset password      </a>
+<input type="submit" value="Login"  class="clearfix"/>
+    <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+</div>
+  </form>
+
+{% endblock %}

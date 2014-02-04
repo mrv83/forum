@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+
+	});
+</script>
+</head>
+
+<body>
+	<form action="{% url 'smileitem_edit' choozen_smile.id %}" method='post'>{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" value="Save" class="clearfix"/>
+		<input type="hidden" name="next" value="{% url 'newsetupsmiles' %}" />
+	</form>
+
+
+	<form action="{% url 'delsmiles' %}" method='POST'>{% csrf_token %}
+		<input type="hidden" name="index" value="{{ choozen_smile.id }}" />
+		<input type="submit" value="Delete" class="clearfix"/>
+		<input type="hidden" name="next" value="{% url 'newsetupsmiles' %}" />
+	</form>
+
+</body>
+
+</html>

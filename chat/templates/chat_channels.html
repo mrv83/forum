@@ -1,0 +1,34 @@
+{% extends 'chat.html' %}
+{% block inner_chat %}
+    {% if user.is_authenticated %}
+    <input id="current_username" value="{{ user.username }}" type="hidden"/>
+    {% endif %}
+    <input id="current_channel" value="{{ channel }}" type="hidden"/>
+    <div class="row">
+        <div class="col-lg-1">
+            <ul class="nav nav-pills nav-stacked">
+                {% for id, channelname in allchannels %}
+                    {% if id == channel %}
+                        <li class="active"><a href="/chat/channel/{{ id }}">{{ channelname }}</a></li>
+                    {% else %}
+                        <li><a href="/chat/channel/{{ id }}">{{ channelname }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-lg-10">
+            {% block chatcontent %}
+            {% endblock %}
+            <textarea class="form-control" rows="10" id="chat_messages" readonly>
+{% for message in messages %}[{{ message.themecreateddata }}] {{ message.user }}: {{ message.textmessage }}
+{% endfor %}
+            </textarea>
+            {% if user.is_authenticated %}
+                <input class="form-control" size=20 name="chat_message_input" id="chat_message_input" type="text"/>
+            {% endif %}
+        </div>
+        <div class="col-lg-1">
+            users
+        </div>
+    </div>
+{% endblock %}

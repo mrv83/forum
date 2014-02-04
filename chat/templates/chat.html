@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="menu_item active"><a href="{% url 'chat' %}">Chat</a></li>
+                <li class="menu_item"><a href="{% url 'channel_list' %}">Channels list</a></li>
+                <li class="menu_item"><a href="{% url 'create_channel' %}">Create new channel</a></li>
+            </ul>
+        </nav>
+    </div>
+    {% block inner_chat %}
+    {% endblock %}
+
+{% endblock %}

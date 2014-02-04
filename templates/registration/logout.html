@@ -1,0 +1,10 @@
+{% block logged %}
+
+<form method="post" action="{% url 'logout' %}">{% csrf_token %}
+{% if user.is_authenticated %}<label class="text-danger text-right">You register as, {{ user.username }} </label>
+</br><a href="{% url 'profile' %}">Profile  </a><a href="#">Statistic</a></br>
+<input type="submit" value="Logout" class="clearfix"/>
+<input type="hidden" name="next" value="{{ request.get_full_path }}" />
+{% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'chat.html' %}
+{% block inner_chat %}
+    <form method="post" action="" role="form">{% csrf_token %}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="new_channel_name_input">Channel name:</label>
+                <input type="text" class="form-control" id="new_channel_name_input" name="new_channel_name_input" placeholder="Input new channel name here" size="64">
+            </div>
+            <div class="form-group">
+                <label for="new_channel_password_input">Password for channel:</label>
+                <input type="text" class="form-control" id="new_channel_password_input" name="new_channel_password_input" placeholder="Input password here" size="25" maxlength="32">
+            </div>
+        </div>
+        <div class="col-lg-2" id="inv_people">
+            <p>invation people</p>
+        </div>
+        <div class="col-lg-2">
+            <p>here must be opponent's list</p>
+        </div>
+        <div class="col-lg-2" id="all_people">
+            <p>All users</p>
+            {% for user in allusers %}
+                {% if user != request.user %}
+                    <p><button type="button" id="{{ user.id }}" name="allusers_list" class="btn btn-default btn-sm users_select_button">{{ user.username }}</button></p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2">
+            <input type="submit" value="Save"  class="clearfix"/>
+        </div>
+        <div class="col-lg-5"></div>
+    </div>
+    </form>
+{% endblock %}
