@@ -54,28 +54,46 @@ $.ajaxSetup({
 
 
 $(document).ready(function(){
+    changerowcount();
+    emptylineadd();
 
-    function changerowcount() {
-        var h = document.documentElement.clientHeight
-        var r = (h - 310 - (h - 310)%21)/21-1;
-        $("#chat_messages").attr('rows', r);
+    function emptylineadd() {
+        var h = document.documentElement.clientHeight;
+        var text = $("#chat_messages").val();
+        var lines = text.split(/\r|\r\n|\n/);
+        var r = lines.length;
+        var min_r = (h-344-(h-344)%22)/22;
+        if (r<min_r) {
+            var new_text = "";
+            for (var i = r; i<=min_r; i++) {
+                new_text = "\n"+text;
+                text = new_text;
+            }
+        }
+        $("#chat_messages").val(text);
     }
 
-    $("#chat_messages").rowIndex[3].fo
-
-    changerowcount();
+    function changerowcount() {
+        var h = document.documentElement.clientHeight;
+        var text = $("#chat_messages").val();
+        var lines = text.split(/\r|\r\n|\n/);
+        var r = lines.length;
+//        alert(r);
+        $("#chat_messages").height(h-344);
+        $("#chat_messages").scrollTop(r*22);
+    }
 
     $( window ).resize(function(){
-        changerowcount()
+        changerowcount();
+        emptylineadd();
 })
-
-
 
     $(".search_option").click(function () {
         $("#select_search").val(this.innerHTML);
     });
 
     function deleteSELECTEDusers(btn) {
+        alert(1);
         var new_button = document.createElement("button");
         new_button.setAttribute("class", "btn btn-default btn-sm users_select_button");
         new_button.innerHTML = btn.innerHTML;
@@ -91,6 +109,7 @@ $(document).ready(function(){
     }
 
     function deleteSELECTusers(btn) {
+        alert(0);
         var new_button = document.createElement("button");
         new_button.setAttribute("class", "btn btn-default btn-sm selected_users_button");
         new_button.innerHTML = btn.innerHTML;
@@ -106,10 +125,12 @@ $(document).ready(function(){
     }
 
     $(".selected_users_button").click(function () {
+        alert(3);
         deleteSELECTEDusers(this);
     });
 
     $(".users_select_button").click(function () {
+        alert(4);
         deleteSELECTusers(this);
     });
 
@@ -123,16 +144,15 @@ $(document).ready(function(){
             var c = $("#current_channel").val();
             var posting = $.post("/chat/add/", {dt: d, st: new_s, cn: c },
             function(data) {
-                var date = "["+d.getHours()+":"+ d.getMinutes()+":"+ d.getMinutes()+"] ";
+                var date = "["+d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds()+"] ";
                 var username = $("#current_username").val();
                 if (s != "") {
                     $("#chat_messages").val(s + "\n" + date+username+": "+new_s);
                 }
                 else $("#chat_messages").val(date+username+": "+new_s);
                 $('#chat_message_input').val("");
+                changerowcount();
             });
         }
-
     })
-
 });
