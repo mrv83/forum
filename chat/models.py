@@ -11,7 +11,7 @@ class ChatChannels(models.Model):
 class ChatMessages(models.Model):
     user = models.ForeignKey(User)
     chatchannel = models.ForeignKey(ChatChannels)
-    themecreateddata = models.DateField(auto_now_add=True)
+    themecreateddata = models.DateTimeField(auto_now_add=True)
     textmessage = models.TextField()
 
 

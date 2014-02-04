@@ -19,10 +19,9 @@
         <div class="col-lg-10">
             {% block chatcontent %}
             {% endblock %}
-            <textarea class="form-control" rows="10" id="chat_messages" readonly>
-{% for message in messages %}[{{ message.themecreateddata }}] {{ message.user }}: {{ message.textmessage }}
-{% endfor %}
-            </textarea>
+            <textarea class="form-control" id="chat_messages" style="" readonly>
+{% for message in messages %}
+[{{ message.themecreateddata.hour }}:{{ message.themecreateddata.minute }}:{{ message.themecreateddata.second }}] {{ message.user }}: {{ message.textmessage }}{% endfor %}</textarea>
             {% if user.is_authenticated %}
                 <input class="form-control" size=20 name="chat_message_input" id="chat_message_input" type="text"/>
             {% endif %}
